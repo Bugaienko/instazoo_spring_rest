@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ua.bugaienko.instazoo.entity.User;
@@ -33,12 +34,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     public static final Logger LOG = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
 
 
-
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String jwt = getJWTFromRequest(request);
         try {
+            String jwt = getJWTFromRequest(request);
 
             if (StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
 
@@ -59,7 +58,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
-
 
 
     private String getJWTFromRequest(HttpServletRequest request) {
