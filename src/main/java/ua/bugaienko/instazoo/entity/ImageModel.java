@@ -25,6 +25,7 @@ public class ImageModel {
 
     @Lob
     @Column(columnDefinition = "bytea")
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] imageBytes;
 
     @JsonIgnore

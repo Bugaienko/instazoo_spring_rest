@@ -68,15 +68,20 @@ public class ImageUploadService {
     @Transactional
     public ImageModel uploadImageToPost(MultipartFile file, Principal principal, Long postId) throws IOException {
         User user = getUserByPrincipal(principal);
+
         Post post = user.getPosts()
                 .stream()
                 .filter(p -> p.getId().equals(postId))
                 .collect(toSinglePostCollector());
 
         ImageModel imageModel = new ImageModel();
-        imageModel.setPostId(post.getId());
-        imageModel.setImageBytes(compressBytes(file.getBytes()));
+
+        System.out.println(post.getId());
+
+
         imageModel.setName(file.getOriginalFilename());
+        imageModel.setImageBytes(compressBytes(file.getBytes()));
+        imageModel.setPostId(post.getId());
 
         LOG.info("Upload image to post id: {}", post.getId());
 
