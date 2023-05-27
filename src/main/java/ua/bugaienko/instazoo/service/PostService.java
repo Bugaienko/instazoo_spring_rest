@@ -95,6 +95,7 @@ public class PostService {
         Optional<ImageModel> imageModel = imageRepository.findByPostId(post.getId());
         postRepository.delete(post);
         imageModel.ifPresent(imageRepository::delete);
+        LOG.info("Deleting post with id:{}", postId);
     }
 
     private User getUserByPrincipal(Principal principal) {
